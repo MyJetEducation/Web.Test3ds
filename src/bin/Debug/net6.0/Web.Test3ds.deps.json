@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "Web.Test3ds/1.0.0": {
+        "runtime": {
+          "Web.Test3ds.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Web.Test3ds/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

@@ -1,0 +1,13 @@
+﻿@page
+@model IndexModel
+
+<div class="main-container">
+    <p style="font-weight:bold">Test 3DS</p>
+    <hr />
+    <p>Verify payment (id: @Model.Input.TransactionId)</p>
+    <p>Payment amount: @Model.Input.Info</p>
+    <div style="text-align: center;">
+        <button id="accept-btn" class="btn btn-info" data-id="@Model.Input.TransactionId" data-okurl="@Model.Input.OkUrl" data-callbackurl="@Model.Input.CallbackUrl">Accept</button>
+        <button id="reject-btn" class="btn btn-info" data-id="@Model.Input.TransactionId" data-failurl="@Model.Input.FailUrl" data-callbackurl="@Model.Input.CallbackUrl">Reject</button>
+    </div>
+</div>
