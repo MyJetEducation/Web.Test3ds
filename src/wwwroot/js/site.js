@@ -21,7 +21,7 @@
 				$(location).prop('href', redirectUrl);
 			},
 			error: function(jqXhr, exception) {
-				alert(jqXhr.responseText);
+				alert(jqXhr.responseText + "\r\n" + jqXhr.statusText);
 			},
 			async: false
 		});
