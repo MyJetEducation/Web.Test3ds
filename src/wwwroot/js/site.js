@@ -10,7 +10,7 @@
 	function process(button, state, callbackUrlAttr) {
 		var redirectUrl = button.attr(callbackUrlAttr);
 		var trId = button.attr("data-id");
-		var callbackurl = button.attr("data-callbackurl") + "?transaction-id=" + trId + "state=" + state + "&external-id=" + getUid();
+		var callbackurl = button.attr("data-callbackurl") + "?transaction-id=" + trId + "&state=" + state + "&external-id=" + getUid();
 		runCallback(callbackurl, redirectUrl);
 	}
 
