@@ -10,14 +10,16 @@ namespace Web.Test3ds.Pages
 			[Required, FromQuery(Name = "transaction-id")] string transactionId, 
 			[Required, FromQuery(Name = "ok-url")] string okUrl, 
 			[Required, FromQuery(Name = "fail-url")] string failUrl,
-			[Required, FromQuery(Name = "callback-url")] string callbackUrl)
+			[Required, FromQuery(Name = "callback-url")] string callbackUrl,
+			[FromQuery(Name = "info")] string info)
 		{
 			Input = new InputModel
 			{
 				TransactionId = transactionId,
 				OkUrl = okUrl,
 				FailUrl = failUrl,
-				CallbackUrl = callbackUrl
+				CallbackUrl = callbackUrl,
+				Info = info
 			};
 		}
 
