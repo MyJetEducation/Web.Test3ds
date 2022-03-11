@@ -28,8 +28,10 @@
 	}
 
 	function getUid() {
-		var u = Date.now().toString(16) + Math.random().toString(16) + '0'.repeat(16);
-		var guid = [u.substr(0, 8), u.substr(8, 4), '4000-8' + u.substr(13, 3), u.substr(16, 12)].join('-');
-		return guid;
+		var firstPart = (Math.random() * 46656) | 0;
+		var secondPart = (Math.random() * 46656) | 0;
+		firstPart = ("000" + firstPart.toString(36)).slice(-3);
+		secondPart = ("000" + secondPart.toString(36)).slice(-3);
+		return firstPart + secondPart;
 	}
 });
