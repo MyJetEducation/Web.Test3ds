@@ -5,6 +5,13 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 	IServiceCollection services = builder.Services;
 	services.AddRazorPages();
+	services.AddCors(options =>
+	{
+		options.AddPolicy("CorsApi",
+			policyBuilder => policyBuilder.WithOrigins("http://localhost")
+				.AllowAnyHeader()
+				.AllowAnyMethod());
+	});
 
 	WebApplication app = builder.Build();
 
@@ -16,13 +23,12 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 		app.UseHsts();
 	}
 
+
 	app.UseDefaultFiles();
 	app.UseStaticFiles();
 	app.UseForwardedHeaders();
 	app.UseRouting();
-	app.UseEndpoints(endpoints =>
-	{
-		endpoints.MapRazorPages();
-	});
+	app.UseCors();
+	app.UseEndpoints(endpoints => { endpoints.MapRazorPages(); });
 
 	app.Run();
