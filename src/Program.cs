@@ -1,17 +1,19 @@
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 	// Add services to the container.
-	builder.Services.AddRazorPages();
-
 	IServiceCollection services = builder.Services;
-	services.AddRazorPages();
+
 	services.AddCors(options =>
 	{
-		options.AddPolicy("CorsApi",
-			policyBuilder => policyBuilder.WithOrigins("http://localhost")
-				.AllowAnyHeader()
-				.AllowAnyMethod());
+		options.AddPolicy("AllowAllHeaders",
+			corsPolicyBuilder =>
+			{
+				corsPolicyBuilder.AllowAnyOrigin()
+					.AllowAnyHeader()
+					.AllowAnyMethod();
+			});
 	});
+	services.AddRazorPages();
 
 	WebApplication app = builder.Build();
 
@@ -23,12 +25,18 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 		app.UseHsts();
 	}
 
-
+	app.UseCors(
+		options => options.WithOrigins("http://localhost", "https://localhost")
+			.AllowAnyHeader()
+			.AllowAnyMethod()
+			.AllowCredentials()
+		);
+	
 	app.UseDefaultFiles();
 	app.UseStaticFiles();
 	app.UseForwardedHeaders();
 	app.UseRouting();
-	app.UseCors();
+
 	app.UseEndpoints(endpoints => { endpoints.MapRazorPages(); });
 
 	app.Run();
