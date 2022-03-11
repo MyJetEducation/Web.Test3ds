@@ -1,6 +1,6 @@
 ﻿$(function() {
 	$("#accept-btn").click(function() {
-		process($(this), 'accept', "data-okurl");
+		process($(this), 'approve', "data-okurl");
 	});
 
 	$("#reject-btn").click(function() {
