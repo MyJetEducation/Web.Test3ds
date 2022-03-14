@@ -13,5 +13,7 @@
 		public string FailUrl { get; set; }
 
 		public string CallbackUrl { get; set; }
+
+		public DateTime Date { get; set; }
 	}
 }
