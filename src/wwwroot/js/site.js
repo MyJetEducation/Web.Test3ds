@@ -10,8 +10,17 @@
 	function process(button, state, callbackUrlAttr) {
 		var redirectUrl = button.attr(callbackUrlAttr);
 		var trId = button.attr("data-id");
-		var callbackurl = button.attr("data-callbackurl") + "?transaction-id=" + trId + "&state=" + state + "&external-id=" + getUid();
-		runCallback(callbackurl, redirectUrl);
+
+		$.ajax({
+			url: "deposit/callback?id=" + trId,
+			success: function(callbackurl) {
+				runCallback(callbackurl, redirectUrl);
+			},
+			error: function(jqXhr, exception) {
+				alert(jqXhr.responseText + "\r\n" + jqXhr.statusText);
+			},
+			async: false
+		});
 	}
 
 	function runCallback(url, redirectUrl) {
@@ -25,13 +34,5 @@
 			},
 			async: false
 		});
-	}
-
-	function getUid() {
-		var firstPart = (Math.random() * 46656) | 0;
-		var secondPart = (Math.random() * 46656) | 0;
-		firstPart = ("000" + firstPart.toString(36)).slice(-3);
-		secondPart = ("000" + secondPart.toString(36)).slice(-3);
-		return firstPart + secondPart;
 	}
 });

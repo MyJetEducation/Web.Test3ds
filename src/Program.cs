@@ -1,9 +1,15 @@
+using Web.Test3ds.Models;
+using Web.Test3ds.Services;
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 	// Add services to the container.
 	IServiceCollection services = builder.Services;
 
 	services.AddRazorPages();
+	services.AddControllers();
+
+	services.AddSingleton<IDepositCache<DepositInfo>, DepositCache<DepositInfo>>();
 
 	WebApplication app = builder.Build();
 
@@ -19,6 +25,11 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 	app.UseStaticFiles();
 	app.UseForwardedHeaders();
 	app.UseRouting();
-	app.UseEndpoints(endpoints => { endpoints.MapRazorPages(); });
+
+	app.UseEndpoints(endpoints =>
+	{
+		endpoints.MapRazorPages();
+		endpoints.MapControllers();
+	});
 
 	app.Run();

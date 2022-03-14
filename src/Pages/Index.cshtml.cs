@@ -1,25 +1,33 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Web.Test3ds.Models;
+using Web.Test3ds.Services;
 
 namespace Web.Test3ds.Pages
 {
 	public class IndexModel : PageModel
 	{
-		public void OnGet(
-			[Required, FromQuery(Name = "transaction-id")] string transactionId, 
-			[Required, FromQuery(Name = "ok-url")] string okUrl, 
-			[Required, FromQuery(Name = "fail-url")] string failUrl,
-			[Required, FromQuery(Name = "callback-url")] string callbackUrl,
-			[FromQuery(Name = "info")] string info)
+		private readonly IDepositCache<DepositInfo> _depositCache;
+
+		public IndexModel(IDepositCache<DepositInfo> depositCache) => _depositCache = depositCache;
+
+		public void OnGet([Required, FromQuery(Name = "id")] string id)
 		{
+			if (id == null)
+				throw new Exception("No id");
+
+			DepositInfo info = _depositCache.Get(id);
+			if (info == null)
+				throw new Exception("No data");
+
 			Input = new InputModel
 			{
-				TransactionId = transactionId,
-				OkUrl = okUrl,
-				FailUrl = failUrl,
-				CallbackUrl = callbackUrl,
-				Info = info
+				TransactionId = info.TransactionId,
+				ExternalId = info.ExternalId,
+				OkUrl = info.OkUrl,
+				FailUrl = info.FailUrl,
+				Info = info.Info
 			};
 		}
 
@@ -29,8 +37,11 @@ namespace Web.Test3ds.Pages
 		public class InputModel
 		{
 			[Required, FromQuery(Name = "transaction-id")]
-			public string TransactionId { get; set; }
-			
+			public Guid? TransactionId { get; set; }
+
+			[Required, FromQuery(Name = "external-id")]
+			public string ExternalId { get; set; }
+
 			[Required, FromQuery(Name = "info")]
 			public string Info { get; set; }
 
@@ -39,9 +50,6 @@ namespace Web.Test3ds.Pages
 
 			[Required, FromQuery(Name = "fail-url")]
 			public string FailUrl { get; set; }
-
-			[Required, FromQuery(Name = "callback-url")]
-			public string CallbackUrl { get; set; }
 		}
 	}
 }
