@@ -40,11 +40,11 @@ namespace Web.Test3ds.Controllers
 
 		[AllowAnonymous]
 		[HttpGet("callback")]
-		public string Callback(string id)
+		public string Callback(string id, string state)
 		{
 			DepositInfo depositInfo = _depositCache.Get(id);
 
-			return $"{depositInfo.CallbackUrl}?transaction-id={depositInfo.TransactionId}&state=approve&external-id={depositInfo.ExternalId}";
+			return $"{depositInfo.CallbackUrl}?transaction-id={depositInfo.TransactionId}&state={state}&external-id={depositInfo.ExternalId}";
 		}
 
 		private static string NewUid => Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "");

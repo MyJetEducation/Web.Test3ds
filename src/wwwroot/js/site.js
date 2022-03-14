@@ -12,7 +12,7 @@
 		var trId = button.attr("data-id");
 
 		$.ajax({
-			url: "deposit/callback?id=" + trId,
+			url: "deposit/callback?id=" + trId + "&state=" + state,
 			success: function(callbackurl) {
 				runCallback(callbackurl, redirectUrl);
 			},
